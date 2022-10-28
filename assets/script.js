@@ -27,11 +27,48 @@ btnAgregar.addEventListener("click", (evento) => {
 */
 // Aun puede mejorar más, si esta la convertimos en una función anónima
 
+
+/*
 const createTask = (evento) => {
-    console.log(evento)
     evento.preventDefault();
     const input = document.querySelector('[data-form-input]');
-    console.log(input.value)
+    const value = input.value;
+    const task = document.querySelector('[data-task]')
+    const content = `<div>
+    <i class="far fa-check-square icon"></i>
+    <span class="task">${value}</span>
+    </div>
+    <i class="fas fa-trash-alt trashIcon icon"></i>`;
+    task.innerHTML = content;
+    input.value = "";
+    console.log(content);
 }
+*/ //Hasta aquí el código es muy voluptusoso, exsiten funcionalidades que evistan la economía del código, observese las siguientes modificaciones
+
+const createTask = (evento) => {
+    evento.preventDefault();
+    const input = document.querySelector('[data-form-input]');
+    const value = input.value;
+    const list = document.querySelector('[data-list]');
+    const task = document.createElement("li");
+    task.classList.add("card");
+    const content = 
+    `<div>
+        <i class="far fa-check-square icon"></i>
+        <span class="task">${value}</span>
+    </div>
+    <i class="fas fa-trash-alt trashIcon icon"></i>`;
+    task.innerHTML = content;
+    list.appendChild(task);
+    input.value = "";
+    console.log(content);
+}
+
+/*
+    insertBefore(padre, hijo): Coloca un nodo antes del otro
+    replaceChild(elemento1, elemento2): Sustituye el nodo del elemento 1 por el nodo del elemento 2
+    removeChild(elemento): Remueve un nodo del árbol
+*/
+
 
 btnAgregar.addEventListener("click", createTask);
