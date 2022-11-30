@@ -1,5 +1,7 @@
 // Se pretende hacer un querySelector del "botón agregar", se hace ya se por la etiqueta, id, o clase. Por etique es mala idea si solo se quiere seleccionar una tag en específico, por id y por clase es mala idea por son elementos editables, ya futuro un programador podría decidir modificarlos, por lo que se perdería el link o referencia. Para solucionar esto, existen los data atributes data-form-btn
 
+
+( () =>{
 const btnAgregar = document.querySelector('[data-form-btn]');
 //const input = document.querySelector('[data-form-input]');
 console.log(btnAgregar);
@@ -51,19 +53,20 @@ const createTask = (evento) => {
     const value = input.value;
     
     const list = document.querySelector('[data-list]');
-    const task = document.createElement("li");   
-    task.classList.add('card');
+    const task = document.createElement("li");  
 
+    task.classList.add('card');
     const taskContent = document.createElement("div");
     taskContent.appendChild(checkComplete());
     const titleTask = document.createElement("span");
     titleTask.classList.add("task");
-    titleTask.innerText = value;
+    titleTask.innerText = value;   
     taskContent.appendChild(titleTask);
-    const content = `<i class="fas fa-trash-alt trashIcon icon"></i>`;
+    // const content = `<i class="fas fa-trash-alt trashIcon icon"></i>`;
     //task.innerHTML = content;
 
     task.appendChild(taskContent);
+    task.appendChild(deleteIcon());
     list.appendChild(task);
 
     input.value = "";
@@ -80,6 +83,7 @@ const createTask = (evento) => {
 btnAgregar.addEventListener("click", createTask);
 
 
+// Inmediately Inovoked expression IIFE
 const checkComplete = () => {
     const i = document.createElement("i");
     i.classList.add("far", "fa-check-square", "icon");
@@ -88,5 +92,22 @@ const checkComplete = () => {
 }
 
 const completeTask = (event) => {
-    console.log(event)
+    const element = event.target;
+    element.classList.toggle("fas");
+    element.classList.toggle("far");
+    element.classList.toggle("completeIcon");
 }
+
+const deleteIcon = () =>{
+    const i = document.createElement("i");
+    i.classList.add("fas", "fa-trash-alt", "trashIcon", "icon");
+    i.addEventListener("click", deleteTask)
+    return i;
+}
+
+const deleteTask = (event) => {
+    const parent =  event.target.parentElement;
+    parent.remove();
+}
+
+})();
